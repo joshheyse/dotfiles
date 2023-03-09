@@ -40,8 +40,8 @@ lvim.plugins = {
       require('Navigator').setup()
       vim.api.nvim_set_keymap('n', '<C-h>', '<CMD>NavigatorLeft<CR>', { silent = true })
       vim.api.nvim_set_keymap('n', '<C-l>', '<CMD>NavigatorRight<CR>', { silent = true })
-      vim.api.nvim_set_keymap('n', '<C-j>', '<CMD>NavigatorUp<CR>', { silent = true })
-      vim.api.nvim_set_keymap('n', '<C-k>', '<CMD>NavigatorDown<CR>', { silent = true })
+      vim.api.nvim_set_keymap('n', '<C-k>', '<CMD>NavigatorUp<CR>', { silent = true })
+      vim.api.nvim_set_keymap('n', '<C-j>', '<CMD>NavigatorDown<CR>', { silent = true })
       vim.api.nvim_set_keymap('n', '<C-p>', '<CMD>NavigatorPrevious<CR>', { silent = true })
     end
   }

@@ -228,6 +228,29 @@ zinit wait'2' lucid \
   --atinit="ZINIT[COMPINIT_OPTS]=-C; zicompinit; autoload -U +X bashcompinit && bashcompinit; zicdreplay" \
   light-mode for zdharma-continuum/fast-syntax-highlighting
 
+# colored man pages must be loaded after syntax-highlighting
+zinit wait'2b' lucid for \
+  OMZP::colored-man-pages \
+
+if [ -x "$(command -v bat)" ]; then
+  # this MUST be run after woefe/git-prompt.zsh
+  alias cat=bat
+  # this function does not work for piping to less with (less) arguments (any flags will become bat flags)
+  function less() {
+    local filename="${@:$#}" # last parameter, MUST be the filename
+    local flaglength=$(($# - 1))
+    if ((flaglength > 0)); then
+      local other="${@:1:$flaglength}"
+      bat $filename --pager "less $LESS $other"
+    elif ((flaglength == 0)); then
+      bat $filename --pager "less $LESS"
+    else
+      # no arg at all -> piping
+      command less
+    fi
+  }
+fi
+
 # Load starship theme
 zinit ice as"command" from"gh-r" \
           atclone"./starship init zsh > init.zsh; ./starship completions zsh > _starship" \

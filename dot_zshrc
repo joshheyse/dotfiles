@@ -275,7 +275,7 @@ alias gpp='git pull && git push'
 
 # Aliases
 alias l=ll
-alias la=l -a
+alias la="ll -a"
 
 alias ec='chezmoi edit --apply'
 

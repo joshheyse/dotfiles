@@ -16,7 +16,6 @@ export TERMINFO_DIRS="$TERMINFO_DIRS:$HOME/.local/share/terminfo"
 export CONDA_PREFIX="$HOME/.miniconda"
 if [ -d $CONDA_PREFIX ]; then
   __conda_setup="$("$CONDA_PREFIX/bin/conda" 'shell.zsh' 'hook' 2> /dev/null)"
-  echo __conda_setup
   if [ $? -eq 0 ]; then
     eval "$__conda_setup"
   else
@@ -119,7 +118,7 @@ else
   # zoxide not available on old raspberry pi. fasd is pure shell, but slow: fasd takes 0.06s
   zinit wait'0' lucid as"program" pick"$ZPFX/fasd" make"PREFIX=$ZPFX install" \
     atinit'eval "$(fasd --init auto)" && alias sd="noglob sd"' light-mode for clvv/fasd
-  c() {
+  function c() {
     local dir
     dir="$(fasd -Rdl "$1" | $FZF -1 -0 --no-sort +m)" && cd "${dir}" || return 1
   }

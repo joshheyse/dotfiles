@@ -116,6 +116,10 @@ vim.api.nvim_create_autocmd("BufWritePost", {
   command = "! chezmoi apply --source-path \"%\"",
 })
 
+lvim.keys.normal_mode["rn"] = "<cmd>lua vim.lsp.buf.rename()<cr>"
+lvim.keys.normal_mode["<leader>S"] = ":%s/\\V\\<<C-r><C-w>\\>/"
+
+
 -- add your own keymapping
 -- lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
 -- lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"

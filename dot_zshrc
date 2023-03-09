@@ -1,9 +1,91 @@
 #! /usr/bin/env zsh
 
-export PATH=/opt/homebrew/bin:$PATH
+source ~/.bash_profile
+
+typeset -U path
+
+if type brew &>/dev/null; then
+  HOMEBREW_PREFIX="$(brew --prefix)"
+  fpath+="$HOMEBREW_PREFIX/share/zsh/site-functions"
+fi
+
+path+="$HOME/.local/bin"
+
+export TERMINFO_DIRS="$TERMINFO_DIRS:$HOME/.local/share/terminfo"
+
+export CONDA_PREFIX="$HOME/.miniconda"
+if [ -d $CONDA_PREFIX ]; then
+  __conda_setup="$("$CONDA_PREFIX/bin/conda" 'shell.zsh' 'hook' 2> /dev/null)"
+  echo __conda_setup
+  if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+  else
+    if [ -f "$CONDA_PREFIX/etc/profile.d/conda.sh" ]; then
+      . "$CONDA_PREFIX/etc/profile.d/conda.sh"
+      conda deactivate
+    else
+      prependPath "$CONDA_PREFIX/bin"
+    fi
+  fi
+  unset __conda_setup
+else
+  unset CONDA_PREFIX
+fi
 
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
-mkdir -p "$(dirname $ZINIT_HOME)"
-git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+if [[ ! -d $ZINIT_HOME ]]; then
+  mkdir -p "$(dirname $ZINIT_HOME)"
+  git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+fi
 source "${ZINIT_HOME}/zinit.zsh"
 
+# Load starship theme
+zinit ice as"command" from"gh-r" \
+          atclone"./starship init zsh > init.zsh; ./starship completions zsh > _starship" \
+          atpull"%atclone" src"init.zsh" # pull behavior same as clone, source init.zsh
+zinit light starship/starship
+
+# Load zsh-vi-mode
+zinit ice depth=1
+zinit light jeffreytse/zsh-vi-mode
+
+zinit light zpm-zsh/ls
+zinit light zpm-zsh/autoenv
+zinit light zpm-zsh/ssh
+
+zinit wait lucid for \
+ atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
+  zdharma-continuum/fast-syntax-highlighting \
+ blockf \
+  zsh-users/zsh-completions \
+ atload"!_zsh_autosuggest_start" \
+  zsh-users/zsh-autosuggestions
+
+
+alias vim=lvim
+alias vi=lvim
+
+alias gs='git status'
+alias gd='git diff'
+alias gdc='git diff --cached'
+alias ga='git add .'
+alias gaa='git add -A :/'
+alias gc='git commit -m '
+alias gca='git commit -a -m '
+alias gco='git checkout'
+alias gcb='git checkout -b'
+alias gpd='git pull'
+alias gpu='git push -u origin HEAD'
+alias gpp='git pull && git push'
+
+# Aliases
+alias la='ls -la'
+alias l=ll
+alias la=l -a
+
+alias ec='chezmoi edit --apply'
+
+alias cdp='cd $(npm prefix)'
+alias cdg='cd $(git rev-parse --show-toplevel)'
+
+export EDITOR=lvim

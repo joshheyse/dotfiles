@@ -1,0 +1,22 @@
+###############################################################################
+# .profile is read by many shells in the absence of their own shell-specific config files.
+###############################################################################
+# shellcheck shell=bash
+
+if [ -n "$SHELL" ]; then
+  SHELLNAME=${SHELL//*\//}
+  export SHELLNAME
+else
+  SHELLNAME=$(ps -o comm= -c "$$" | sed 's/-//')
+  export SHELLNAME
+fi
+
+if [ "$(uname -o)" = "Darwin" ]; then
+  export IS_MACOS=true
+
+  if [ -d "$HOME/.hombrew" ]; then
+    eval "$($HOME/.hombrew/bin/brew shellenv)"
+  elif [ -d "/opt/homebrew" ]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+  fi
+fi

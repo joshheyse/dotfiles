@@ -1,0 +1,79 @@
+###############################################################################
+# .bash_profile is read by login shells, but not run by subshells
+###############################################################################
+# shellcheck shell=bash
+# shellcheck disable=SC1091
+
+if [ -f "$HOME"/.profile ]; then
+  source "$HOME"/.profile
+fi
+
+if type brew &>/dev/null && [[ $SHELLNAME == "bash" ]]; then
+  HOMEBREW_PREFIX="$(brew --prefix)"
+  if [[ -r "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh" ]]; then
+    source "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh"
+  else
+    for COMPLETION in "${HOMEBREW_PREFIX}/etc/bash_completion.d/"*
+    do
+      [[ -r "${COMPLETION}" ]] && source "${COMPLETION}"
+    done
+  fi
+fi
+
+addItem() {
+  local list=$1
+  local item=$2
+  local position=${3:-'last'}
+  local seperator=${4:-':'}
+
+  if [ -z "$item" ]; then
+    echo "$list"
+  elif [ -z "$list" ]; then
+    echo "$item"
+  elif [[ "$seperator$list$seperator" != *"$seperator$item$seperator"* ]]; then
+    if [[ "$position" == "first" ]]; then
+      echo "$item:${list:+"$seperator$list"}"
+    else
+      echo "${list:+"$list$seperator"}$item"
+    fi
+  else
+    echo "$list"
+  fi
+}
+
+prependItem() {
+  echo "$(addItem $1 $2 'first' $3)"
+}
+
+appendItem() {
+  echo "$(addItem $1 $2 'last' $3)"
+}
+
+appendVar() {
+  local list="$(appendItem ${!1} $2 $3)"
+  local statement="export ${1}=\"$list\""
+  echo $statement
+  eval $statement
+  export $1
+}
+
+prependVar() {
+  local list="$(prependItem ${!1} $2 $3)"
+  local statement="export ${1}=\"$list\""
+  echo $statement
+  eval $statement
+  export $1
+}
+
+appendPath() {
+  if [ -d $1 ]; then
+    appendVar 'PATH' "$1" ':'
+  fi
+}
+
+prependPath() {
+  if [ -d $1 ]; then
+    prependVar 'PATH' "$1" ':'
+  fi
+}
+

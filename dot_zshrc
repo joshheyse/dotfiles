@@ -274,7 +274,6 @@ alias gpu='git push -u origin HEAD'
 alias gpp='git pull && git push'
 
 # Aliases
-alias la='ls -la'
 alias l=ll
 alias la=l -a
 

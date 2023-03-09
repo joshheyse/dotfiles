@@ -224,7 +224,9 @@ zinit light zpm-zsh/ls
 zinit light zpm-zsh/autoenv
 zinit light zpm-zsh/ssh
 
-zinit wait'2' lucid --atinit="ZINIT[COMPINIT_OPTS]=-C; zicompinit; autoload -U +X bashcompinit && bashcompinit; zicdreplay" --atload="fast-theme XDG:improved-default >> /tmp/fast-theme.log" light-mode for zdharma-continuum/fast-syntax-highlighting
+zinit wait'2' lucid \
+  --atinit="ZINIT[COMPINIT_OPTS]=-C; zicompinit; autoload -U +X bashcompinit && bashcompinit; zicdreplay" \
+  light-mode for zdharma-continuum/fast-syntax-highlighting
 
 # Load starship theme
 zinit ice as"command" from"gh-r" \

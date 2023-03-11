@@ -2,7 +2,7 @@
 # loaded earlier with those loaded later in the chain. The file itself will
 # always be loaded last.
 import:
- - ~/.dotfiles/.alacritty.color.yml
+ - ~/.config/alacritty/tokyo-night.yml
 
 env:
   TERM: alacritty
@@ -14,6 +14,8 @@ window:
   opacity: 0.875
   # decorations: none
 
+# normal dark theme
+colors: *tokyo-night
 
 font:
   normal:

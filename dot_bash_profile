@@ -4,8 +4,8 @@
 # shellcheck shell=bash
 # shellcheck disable=SC1091
 
-if [ -f "$HOME"/.profile ]; then
-  source "$HOME"/.profile
+if [[ -f "$HOME/.profile" ]]; then
+  source "$HOME/.profile"
 fi
 
 if type brew &>/dev/null && [[ $SHELLNAME == "bash" ]]; then

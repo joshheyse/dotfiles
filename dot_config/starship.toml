@@ -133,6 +133,10 @@ format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
 format = "$symbol"
 disabled = false
 
+[hostname]
+format = "$symbol"
+disabled = false
+
 [os.symbols]
 Alpine = " "
 Amazon = " "

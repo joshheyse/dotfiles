@@ -68,6 +68,28 @@ export HISTFILE=~/.zsh_history
 export SAVEHIST=$HISTSIZE
 
 ###############################################################################
+# dynamic aliases
+###############################################################################
+if [ -x "$(command -v grc)" ]; then
+  # colorize standard commands. Possibilites here /opt/homebrew/share/grc
+  # don't add
+  # * netstat - waits for command to finish
+  # * ifconfig - completion breaks
+  # * ps - completion buggy
+  # some problems
+  # * diff - crashes sometimes
+  # * env - if given utility parameter, it modifies output formatting
+  for a in df diff dig du env id last lsof traceroute ulimit uptime whois
+  do
+    # function rather than alias is needed to preserve completions
+    $a() {
+      # could forcing color be dangerous for some pipes? It is needed for less
+      grc --colour=on $0 "$@"
+    }
+  done
+fi
+
+###############################################################################
 # completion
 ###############################################################################
 setopt nolistbeep # could be nobeep, but that will create cases where there is no repsone at all to a <tab>
@@ -184,10 +206,7 @@ zinit light jeffreytse/zsh-vi-mode
 zinit light zsh-users/zsh-autosuggestions
 zinit light zdharma-continuum/fast-syntax-highlighting
 
-zinit ice as"command" from"gh-r" \
-  atclone"./starship init zsh > init.zsh; ./starship completions zsh > _starship" \
-  atpull"%atclone" src"init.zsh" # pull behavior same as clone, source init.zsh
-zinit light starship/starship
+eval "$(starship init zsh)"
 
 if [[ -f "$HOME/.aliases" ]]; then
   source "$HOME/.aliases"

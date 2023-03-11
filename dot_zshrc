@@ -58,6 +58,8 @@ export WORDCHARS=$WORDCHARS:s:/:
 setopt auto_cd auto_pushd pushd_ignore_dups glob_complete numeric_glob_sort
 export DIRSTACKSIZE=10
 
+export TIME_STYLE=long-iso
+
 ###############################################################################
 # history
 ###############################################################################
@@ -135,6 +137,10 @@ else
   export FD=fd
 fi
 
+if [ -x "$(command -v zoxide)" ]; then
+  export _ZO_EXCLUDE_DIRS=$HOME
+  zinit wait'0' lucid as'null' atinit'unalias zi;eval "$(zoxide init zsh --hook prompt)" && alias c=__zoxide_zi zi=zinit' light-mode for zdharma-continuum/null
+fi
 
 zinit wait'1' lucid light-mode for supercrabtree/k
 zinit wait'1' lucid light-mode for zpm-zsh/ls
@@ -155,9 +161,6 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 if [ -x "$(command -v bat)" ]; then
   export FZF_CTRL_T_OPTS="--preview 'bat --color always {} | head -120' --preview-window=right:33%"
 fi
-
-# zinit wait'1' lucid as'null' \
-#   atinit"[ -f ~/.fzf.$SHELLNAME ] && source ~/.fzf.$SHELLNAME && bindkey 'ç' fzf-cd-widget #option-c" light-mode for zdharma-continuum/null
 
 # history search has to be loaded aftr fzf, so that it overwrites ^R
 if [[ -x $(command -v atuin) ]]; then
@@ -198,7 +201,6 @@ zstyle ':fzf-tab:*' switch-group ',' '.'
 # such as zsh-autosuggestions or fast-syntax-highlighting!!
 zinit wait'1' lucid atclone'source fzf-tab.zsh && build-fzf-tab-module' \
   atpull'%atclone' for Aloxaf/fzf-tab
-
 
 zinit ice depth=1
 zinit light jeffreytse/zsh-vi-mode

@@ -31,7 +31,11 @@ symbol = ' '
 
 [status]
 disabled = false
-format = '[$status]($style) '
+format = ' [$status]($style) '
+
+[cmd_duration]
+min_time = 500
+format = ' [$duration](bold yellow)'
 
 [git_status]
 ahead = '⇡${count}'

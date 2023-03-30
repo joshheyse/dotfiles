@@ -10,6 +10,13 @@ if type brew &>/dev/null; then
   HOMEBREW_PREFIX="$(brew --prefix)"
   fpath+="$HOMEBREW_PREFIX/share/zsh/site-functions"
 
+  LLVMBIN="$HOMEBREW_PREFIX/opt/llvm/bin"
+  if [[ -d "$LLVMBIN" ]]; then
+    path=("$LLVMBIN" $path)
+  else
+    echo "$LLVMBIN not found, install using homebrew install llvm"
+  fi
+
   GNUBIN="$HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin"
   if [[ -d "$GNUBIN" ]]; then
     path=("$GNUBIN" $path)
@@ -189,9 +196,8 @@ zinit wait'1' lucid for \
 zstyle ':completion:*:git-checkout:*' sort false
 # set descriptions format to enable group support
 zstyle ':completion:*:descriptions' format '[%d]'
-# preview directory's content with exa when completing cd
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'lsd -l --blocks name,permission,size,date --color=always --icon=always $realpath'
-zstyle ':fzf-tab:complete:ls:*' fzf-preview '[ -f "$realpath" ] && bat --color=always $realpath || lsd -l --blocks name,permission,size,date --color=always --icon=always $realpath'
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -l --blocks name,permission,size,date --color=always --icon=always $realpath'
+zstyle ':fzf-tab:complete:ls:*' fzf-preview '[ -f "$realpath" ] && bat --color=always $realpath || exa -l --blocks name,permission,size,date --color=always --icon=always $realpath'
 zstyle ':fzf-tab:complete:export:*' fzf-preview 'printenv $word'
 zstyle ':fzf-tab:complete:ssh:*' fzf-preview 'ping -c1 $word'
 zstyle ':fzf-tab:*' switch-group ',' '.'

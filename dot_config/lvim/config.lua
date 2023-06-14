@@ -9,7 +9,7 @@ an executable
 -- THESE ARE EXAMPLE CONFIGS FEEL FREE TO CHANGE TO WHATEVER YOU WANT
 
 -- general
-lvim.log.level = "warn"
+lvim.log.level = "debug"
 lvim.format_on_save.enabled = false
 lvim.colorscheme = "tokyonight-night"
 -- to disable icons and use a minimalist setup, uncomment the following
@@ -38,42 +38,44 @@ lvim.plugins = {
     "numToStr/Navigator.nvim",
     config = function()
       require('Navigator').setup()
-      vim.api.nvim_set_keymap('n', '<C-h>', '<CMD>NavigatorLeft<CR>', { silent = true })
-      vim.api.nvim_set_keymap('n', '<C-l>', '<CMD>NavigatorRight<CR>', { silent = true })
-      vim.api.nvim_set_keymap('n', '<C-k>', '<CMD>NavigatorUp<CR>', { silent = true })
-      vim.api.nvim_set_keymap('n', '<C-j>', '<CMD>NavigatorDown<CR>', { silent = true })
-      vim.api.nvim_set_keymap('n', '<C-p>', '<CMD>NavigatorPrevious<CR>', { silent = true })
+      lvim.keys.normal_mode['<C-h>'] = '<CMD>NavigatorLeft<CR>'
+      lvim.keys.normal_mode['<C-l>'] = '<CMD>NavigatorRight<CR>'
+      lvim.keys.normal_mode['<C-k>'] = '<CMD>NavigatorUp<CR>'
+      lvim.keys.normal_mode['<C-j>'] = '<CMD>NavigatorDown<CR>'
+      lvim.keys.normal_mode['<C-p>'] = '<CMD>NavigatorPrevious<CR>'
     end
   }
 }
+
+lvim.builtin.treesitter.ignore_install = { "haskell", "vimdoc" }
+lvim.builtin.treesitter.highlight.enable = true
 
 -- if you don't want all the parsers change this to a table of the ones you want
 lvim.builtin.treesitter.ensure_installed = {
   "bash",
   "c",
+  "css",
+  "hcl",
+  "java",
   "javascript",
   "json",
   "lua",
   "python",
-  "typescript",
-  "tsx",
-  "css",
   "rust",
-  "java",
+  "tsx",
+  "typescript",
   "yaml",
 }
 
-lvim.builtin.treesitter.ignore_install = { "haskell" }
-lvim.builtin.treesitter.highlight.enable = true
 
 lvim.builtin.which_key.mappings["t"] = {
   name = "Trouble",
   r = { "<cmd>Trouble lsp_references<cr>", "References" },
   f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
-  d = { "<cmd>Trouble lsp_document_diagnostics<cr>", "Diagnostics" },
+  d = { "<cmd>Trouble document_diagnostics<cr>", "Document Diagnostics" },
   q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
   l = { "<cmd>Trouble loclist<cr>", "LocationList" },
-  w = { "<cmd>Trouble lsp_workspace_diagnostics<cr>", "Diagnostics" },
+  w = { "<cmd>Trouble workspace_diagnostics<cr>", "Workspace Diagnostics" },
 }
 
 local function telescope_find_files(_)
@@ -87,23 +89,24 @@ end
 lvim.builtin.nvimtree.setup.remove_keymaps = {
   "s",
 }
+
 -- Add useful keymaps
-lvim.builtin.nvimtree.setup.view.mappings.list = {
-  { key = { "l", "<CR>", "o" }, action = "edit",                 mode = "n" },
-  { key = "h",                  action = "close_node" },
-  { key = "v",                  action = "vsplit" },
-  { key = "s",                  action = "split" },
-  { key = "C",                  action = "cd" },
-  { key = "gtf",                action = "telescope_find_files", action_cb = telescope_find_files },
-  { key = "gtg",                action = "telescope_live_grep",  action_cb = telescope_live_grep },
-}
+-- lvim.builtin.nvimtree.setup.view.mappings.list = {
+--   { key = { "l", "<CR>", "o" }, action = "edit",                 mode = "n" },
+--   { key = "h",                  action = "close_node" },
+--   { key = "v",                  action = "vsplit" },
+--   { key = "s",                  action = "split" },
+--   { key = "C",                  action = "cd" },
+--   { key = "gtf",                action = "telescope_find_files", action_cb = telescope_find_files },
+--   { key = "gtg",                action = "telescope_live_grep",  action_cb = telescope_live_grep },
+-- }
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
-vim.api.nvim_create_autocmd("BufEnter", {
-  pattern = { "*.json", "*.jsonc" },
-  -- enable wrap mode for json files only
-  command = "setlocal wrap",
-})
+-- vim.api.nvim_create_autocmd("BufEnter", {
+--   pattern = { "*.json", "*.jsonc" },
+--   -- enable wrap mode for json files only
+--   command = "setlocal wrap",
+-- })
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "zsh",
   callback = function()

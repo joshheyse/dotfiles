@@ -23,6 +23,11 @@ if type brew &>/dev/null; then
   else
     echo "$GNUBIN not found, install using homebrew install coreutils"
   fi
+
+  DOTNET="$HOMEBREW_PREFIX/opt/dotnet"
+  if [[ -d "$DOTNET" ]]; then
+    export DOTNET_ROOT="$DOTNET/libexec"
+  fi
 fi
 
 path+="$HOME/.local/bin"

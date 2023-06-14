@@ -1,7 +1,12 @@
 #! /usr/bin/env zsh
 
-alias vim=lvim
-alias vi=lvim
+MNV_APP_NAME=modern-neovim
+MNV_APP_CONFIG=~/.config/$MNV_APP_NAME
+export MNV_APP_NAME MNV_APP_CONFIG
+alias mnv="NVIM_APPNAME=$MNV_APP_NAME nvim"
+
+alias vim=mnv
+# alias vi=vim
 
 alias gs='git status'
 alias gd='git diff'
@@ -24,4 +29,7 @@ alias ec='chezmoi edit --apply'
 
 alias cdp='cd $(npm prefix)'
 alias cdg='cd $(git rev-parse --show-toplevel)'
+
+alias pip3='pip'
+alias python3='python'
 

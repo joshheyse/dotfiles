@@ -12,6 +12,7 @@ window:
     x: 0
     y: 0
   opacity: 0.875
+  option_as_alt: Both
   # decorations: none
 
 font:
@@ -31,4 +32,3 @@ mouse_bindings:
 
 key_bindings:
   - { key: Return,   mods: Command,           action: ToggleFullscreen }
-

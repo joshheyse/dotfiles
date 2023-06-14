@@ -1,12 +1,7 @@
 #! /usr/bin/env zsh
 
-MNV_APP_NAME=modern-neovim
-MNV_APP_CONFIG=~/.config/$MNV_APP_NAME
-export MNV_APP_NAME MNV_APP_CONFIG
-alias mnv="NVIM_APPNAME=$MNV_APP_NAME nvim"
-
-alias vim=mnv
-# alias vi=vim
+alias vim=nvim
+alias vi=nvim
 
 alias gs='git status'
 alias gd='git diff'

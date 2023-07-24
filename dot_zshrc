@@ -32,8 +32,6 @@ fi
 
 path+="$HOME/.local/bin"
 
-export TERMINFO_DIRS="$TERMINFO_DIRS:$HOME/.local/share/terminfo"
-
 export CONDA_PREFIX="$HOME/.miniconda"
 if [ -d $CONDA_PREFIX ]; then
   __conda_setup="$("$CONDA_PREFIX/bin/conda" 'shell.zsh' 'hook' 2> /dev/null)"
@@ -51,6 +49,13 @@ if [ -d $CONDA_PREFIX ]; then
 else
   unset CONDA_PREFIX
 fi
+
+LOCAL_TERM_INFOS="$HOME/.local/share/terminfo"
+if [ -d $LOCAL_TERM_INFOS ]; then
+  export TERMINFO_DIRS="$TERMINFO_DIRS:$LOCAL_TERM_INFOS"
+fi
+unset LOCAL_TERM_INFOS
+
 
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 if [[ ! -d $ZINIT_HOME ]]; then

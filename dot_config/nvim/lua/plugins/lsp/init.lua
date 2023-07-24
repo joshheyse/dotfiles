@@ -10,7 +10,7 @@ return {
           library = { plugins = { "neotest", "nvim-dap-ui" }, types = true },
         },
       },
-      { "j-hui/fidget.nvim", config = true },
+      { "j-hui/fidget.nvim", branch = "legacy", config = true },
       { "smjonas/inc-rename.nvim", config = true },
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",

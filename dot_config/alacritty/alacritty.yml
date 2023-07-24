@@ -1,0 +1,34 @@
+# These configuration files will be loaded in order, replacing values in files
+# loaded earlier with those loaded later in the chain. The file itself will
+# always be loaded last.
+import:
+ - ~/.config/alacritty/themes/tokyo-night.yml
+
+env:
+  TERM: alacritty
+
+window:
+  padding:
+    x: 0
+    y: 0
+  opacity: 0.875
+  option_as_alt: Both
+  # decorations: none
+
+font:
+  normal:
+    family: 'MesloLGS Nerd Font'
+  bold:
+    family: 'MesloLGS Nerd Font'
+  italic:
+    family: 'MesloLGS Nerd Font'
+  bold_italic:
+    family: 'MesloLGS Nerd Font'
+  size: 11.0
+
+
+mouse_bindings:
+  - { mouse: Middle, action: None }
+
+key_bindings:
+  - { key: Return,   mods: Command,           action: ToggleFullscreen }

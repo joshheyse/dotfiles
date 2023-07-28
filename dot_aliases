@@ -17,7 +17,7 @@ alias gpu='git push -u origin HEAD'
 alias gpp='git pull && git push'
 
 # Aliases
-alias l=ll
+alias l="ll"
 alias la="ll -a"
 
 alias ec='chezmoi edit --apply'

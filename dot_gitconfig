@@ -5,3 +5,6 @@ name = Josh Heyse
 email = josh@heyse.us
 [pull]
 	ff = only
+
+[push]
+  autoSetupRemote = true

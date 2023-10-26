@@ -28,6 +28,12 @@ if type brew &>/dev/null; then
   if [[ -d "$DOTNET" ]]; then
     export DOTNET_ROOT="$DOTNET/libexec"
   fi
+
+  # if [[ -e /opt/homebrew/bin/gcc-13 ]]; then
+  #   export CC=/opt/homebrew/bin/gcc-13
+  #   export CXX=/opt/homebrew/bin/g++-13
+  #   alias gcc=$CC
+  # fi
 fi
 
 path+="$HOME/.local/bin"
@@ -56,6 +62,10 @@ if [ -d $LOCAL_TERM_INFOS ]; then
 fi
 unset LOCAL_TERM_INFOS
 
+if [[ "$TERM_PROGRAM" == "vscode" ]]; then
+  source "$(code --locate-shell-integration-path zsh)"
+  export TERM='alacritty'
+fi
 
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 if [[ ! -d $ZINIT_HOME ]]; then
@@ -90,7 +100,7 @@ export SAVEHIST=$HISTSIZE
 # dynamic aliases
 ###############################################################################
 if [ -x "$(command -v grc)" ]; then
-  # colorize standard commands. Possibilites here /opt/homebrew/share/grc
+  # colorize standard commands. Possibilities here /opt/homebrew/share/grc
   # don't add
   # * netstat - waits for command to finish
   # * ifconfig - completion breaks
@@ -230,4 +240,4 @@ if [[ -f "$HOME/.aliases" ]]; then
   source "$HOME/.aliases"
 fi
 
-export EDITOR=lvim
+export EDITOR=vim

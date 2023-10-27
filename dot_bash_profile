@@ -77,3 +77,4 @@ prependPath() {
   fi
 }
 
+. "$HOME/.cargo/env"

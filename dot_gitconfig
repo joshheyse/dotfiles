@@ -8,3 +8,5 @@ email = josh@heyse.us
 
 [push]
   autoSetupRemote = true
+[init]
+	defaultBranch = main

@@ -1,0 +1,36 @@
+import = ["/Users/joshheyse/.config/alacritty/themes/tokyo-night.toml"]
+
+[env]
+TERM = "alacritty"
+
+[font]
+size = 20.0
+
+[font.bold]
+family = "MesloLGS Nerd Font"
+
+[font.bold_italic]
+family = "MesloLGS Nerd Font"
+
+[font.italic]
+family = "MesloLGS Nerd Font"
+
+[font.normal]
+family = "MesloLGS Nerd Font"
+
+[[keyboard.bindings]]
+action = "ToggleFullscreen"
+key = "Return"
+mods = "Command"
+
+[[mouse.bindings]]
+action = "None"
+mouse = "Middle"
+
+[window]
+opacity = 0.875
+option_as_alt = "Both"
+
+[window.padding]
+x = 0
+y = 0

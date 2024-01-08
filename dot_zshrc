@@ -1,10 +1,16 @@
 #! /usr/bin/env zsh
 
-if [[ -f "$HOME/.profile" ]]; then
-  source ~/.bash_profile
-fi
+typeset -U PATH path
 
-typeset -U path
+if [ "$(uname -o)" = "Darwin" ]; then
+  export IS_MACOS=true
+
+  if [ -d "$HOME/.hombrew" ]; then
+    eval "$("$HOME/.hombrew/bin/brew" shellenv)"
+  elif [ -d "/opt/homebrew" ]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+  fi
+fi
 
 if type brew &>/dev/null; then
   HOMEBREW_PREFIX="$(brew --prefix)"
@@ -12,16 +18,23 @@ if type brew &>/dev/null; then
 
   LLVMBIN="$HOMEBREW_PREFIX/opt/llvm/bin"
   if [[ -d "$LLVMBIN" ]]; then
-    path=("$LLVMBIN" $path)
+    export path=("$LLVMBIN" $path)
   else
     echo "$LLVMBIN not found, install using homebrew install llvm"
   fi
 
   GNUBIN="$HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin"
   if [[ -d "$GNUBIN" ]]; then
-    path=("$GNUBIN" $path)
+    export path=("$GNUBIN" $path)
   else
     echo "$GNUBIN not found, install using homebrew install coreutils"
+  fi
+
+  BINUTILSBIN="$HOMEBREW_PREFIX/opt/binutils/bin"
+  if [[ -d "$BINUTILSBIN" ]]; then
+    export path=("$BINUTILSBIN" $path)
+  else
+    echo "$BINUTILSBIN not found, install using homebrew install binutils"
   fi
 
   DOTNET="$HOMEBREW_PREFIX/opt/dotnet"
@@ -29,32 +42,6 @@ if type brew &>/dev/null; then
     export DOTNET_ROOT="$DOTNET/libexec"
   fi
 
-  # if [[ -e /opt/homebrew/bin/gcc-13 ]]; then
-  #   export CC=/opt/homebrew/bin/gcc-13
-  #   export CXX=/opt/homebrew/bin/g++-13
-  #   alias gcc=$CC
-  # fi
-fi
-
-path+="$HOME/.local/bin"
-path+="$HOME/bin"
-
-export CONDA_PREFIX="$HOME/.miniconda"
-if [ -d $CONDA_PREFIX ]; then
-  __conda_setup="$("$CONDA_PREFIX/bin/conda" 'shell.zsh' 'hook' 2> /dev/null)"
-  if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-  else
-    if [ -f "$CONDA_PREFIX/etc/profile.d/conda.sh" ]; then
-      . "$CONDA_PREFIX/etc/profile.d/conda.sh"
-      conda deactivate
-    else
-      prependPath "$CONDA_PREFIX/bin"
-    fi
-  fi
-  unset __conda_setup
-else
-  unset CONDA_PREFIX
 fi
 
 LOCAL_TERM_INFOS="$HOME/.local/share/terminfo"
@@ -68,12 +55,22 @@ if [[ "$TERM_PROGRAM" == "vscode" ]]; then
   export TERM='alacritty'
 fi
 
+export NVM_DIR
+NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+if [ -s "$NVM_DIR/nvm.sh" ]; then
+  \. "$NVM_DIR/nvm.sh" # This loads nvm
+fi
+
+export path=("$HOME/.local/bin" $path)
+export path=("$HOME/.cargo/bin" $path)
+
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 if [[ ! -d $ZINIT_HOME ]]; then
   mkdir -p "$(dirname $ZINIT_HOME)"
   git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 fi
 source "${ZINIT_HOME}/zinit.zsh"
+
 
 # misc
 setopt interactive_comments long_list_jobs extendedglob notify list_packed transient_rprompt
@@ -179,7 +176,7 @@ autoload compinit
 compinit
 
 export FZF_DEFAULT_COMMAND="$FD --type file"
-export FZF_DEFAULT_OPTS="--ansi --select-1 --height 40% --reverse --tiebreak=begin --bind end:preview-down,home:preview-up,ctrl-a:select-all+accept \
+export FZF_DEFAULT_OPTS="--ansi --select-1 --height ~40% --reverse --tiebreak=begin --bind end:preview-down,home:preview-up,ctrl-a:select-all+accept \
  --color=fg:#f8f8f2,bg:#282a36,hl:#bd93f9 --color=fg+:#f8f8f2,bg+:#44475a,hl+:#bd93f9 --color=info:#ffb86c,prompt:#50fa7b,pointer:#ff79c6 --color=marker:#ff79c6,spinner:#ffb86c,header:#6272a4"
 export FZF_TMUX_OPTS="-d 70%"
 
@@ -242,3 +239,5 @@ if [[ -f "$HOME/.aliases" ]]; then
 fi
 
 export EDITOR=vim
+
+

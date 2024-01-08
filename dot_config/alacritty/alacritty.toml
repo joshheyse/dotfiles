@@ -20,8 +20,8 @@ family = "MesloLGS Nerd Font"
 
 [[keyboard.bindings]]
 action = "ToggleFullscreen"
-key = "Return"
 mods = "Command"
+key = "Return"
 
 [[mouse.bindings]]
 action = "None"

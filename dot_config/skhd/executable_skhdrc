@@ -157,36 +157,29 @@ alt - p : yabai -m window --toggle sticky --toggle topmost --toggle pip
 
 alt + cmd - f : app_name=Firefox && \
   index="$(yabai -m query --windows | jq --arg APP_NAME $app_name 'map(select(.app == $APP_NAME)) | sort_by(".is-visible")[0].id')" && \
-  yabai -m window --focus "$index" && \
   yabai -m window --focus "$index"
 
 alt + cmd - t : app_name=Alacritty && \
   index="$(yabai -m query --windows | jq --arg APP_NAME $app_name 'map(select(.app == $APP_NAME)) | sort_by(".is-visible")[0].id')" && \
-  yabai -m window --focus "$index" && \
   yabai -m window --focus "$index"
 
 alt + cmd - e : app_name=Thunderbird && \
   index="$(yabai -m query --windows | jq --arg APP_NAME $app_name 'map(select(.app == $APP_NAME)) | sort_by(".is-visible")[0].id')" && \
-  yabai -m window --focus "$index" && \
   yabai -m window --focus "$index"
 
 alt + cmd - m : app_name=Messages && \
   index="$(yabai -m query --windows | jq --arg APP_NAME $app_name 'map(select(.app == $APP_NAME)) | sort_by(".is-visible")[0].id')" && \
-  yabai -m window --focus "$index" && \
   yabai -m window --focus "$index"
 
 alt + cmd - s : app_name=Spotify && \
   index="$(yabai -m query --windows | jq --arg APP_NAME $app_name 'map(select(.app == $APP_NAME)) | sort_by(".is-visible")[0].id')" && \
-  yabai -m window --focus "$index" && \
   yabai -m window --focus "$index"
 
 alt + cmd - d : app_name=Discord && \
   index="$(yabai -m query --windows | jq --arg APP_NAME $app_name 'map(select(.app == $APP_NAME)) | sort_by(".is-visible")[0].id')" && \
-  yabai -m window --focus "$index" && \
   yabai -m window --focus "$index"
 
 alt + cmd - o : app_name="Microsoft Outlook" && \
   index="$(yabai -m query --windows | jq --arg APP_NAME $app_name 'map(select(.app == $APP_NAME)) | sort_by(".is-visible")[0].id')" && \
-  yabai -m window --focus "$index" && \
   yabai -m window --focus "$index"
 

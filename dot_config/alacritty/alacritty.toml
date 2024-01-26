@@ -4,7 +4,7 @@ import = ["/Users/joshheyse/.config/alacritty/themes/tokyo-night.toml"]
 TERM = "alacritty-direct"
 
 [font]
-size = 20.0
+size = 12.0
 
 [font.bold]
 family = "MesloLGS Nerd Font"
@@ -29,7 +29,7 @@ mouse = "Middle"
 
 [window]
 opacity = 0.875
-option_as_alt = "Both"
+# option_as_alt = "Both"
 
 [window.padding]
 x = 0

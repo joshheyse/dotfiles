@@ -150,10 +150,10 @@ if [ ! -x "$(command -v dircolors)" ]; then
 fi
 
 # add LOTS of file type colors
-zinit wait'1' atclone"dircolors -b LS_COLORS > clrs.zsh" \
-    atpull'%atclone' pick"clrs.zsh" nocompile'!' \
-    atload'zstyle ":completion:*" list-colors "${(s.:.)LS_COLORS}"' \
-    lucid light-mode for trapd00r/LS_COLORS
+# zinit wait'1' atclone"dircolors -b LS_COLORS > clrs.zsh" \
+#     atpull'%atclone' pick"clrs.zsh" nocompile'!' \
+#     atload'zstyle ":completion:*" list-colors "${(s.:.)LS_COLORS}"' \
+#     lucid light-mode for trapd00r/LS_COLORS
 
 if [ -x "$(command -v fdfind)" ]; then
   # alternate name used on ubuntu/debian
@@ -236,6 +236,10 @@ eval "$(starship init zsh)"
 if [[ -f "$HOME/.aliases" ]]; then
   source "$HOME/.aliases"
 fi
+
+function weechat() {
+  TERM=alacritty command weechat
+}
 
 export EDITOR=vim
 

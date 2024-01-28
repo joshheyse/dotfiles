@@ -149,6 +149,8 @@ if [ ! -x "$(command -v dircolors)" ]; then
   alias dircolors=gdircolors
 fi
 
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=black'
+
 # add LOTS of file type colors
 # zinit wait'1' atclone"dircolors -b LS_COLORS > clrs.zsh" \
 #     atpull'%atclone' pick"clrs.zsh" nocompile'!' \
@@ -213,8 +215,8 @@ zinit wait'1' lucid for \
 zstyle ':completion:*:git-checkout:*' sort false
 # set descriptions format to enable group support
 zstyle ':completion:*:descriptions' format '[%d]'
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -l --blocks name,permission,size,date --color=always --icon=always $realpath'
-zstyle ':fzf-tab:complete:ls:*' fzf-preview '[ -f "$realpath" ] && bat --color=always $realpath || exa -l --blocks name,permission,size,date --color=always --icon=always $realpath'
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -l --color=always --no-user --no-time --no-filesize --no-permissions --icons $realpath'
+zstyle ':fzf-tab:complete:ls:*' fzf-preview '[ -f "$realpath" ] && bat --style=changes,rule,snip --color=always $realpath || exa -l --color=always --no-user --no-time --no-filesize --no-permissions --icons $realpath'
 zstyle ':fzf-tab:complete:export:*' fzf-preview 'printenv $word'
 zstyle ':fzf-tab:complete:ssh:*' fzf-preview 'ping -c1 $word'
 zstyle ':fzf-tab:*' switch-group ',' '.'

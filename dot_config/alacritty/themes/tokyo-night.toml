@@ -1,15 +1,9 @@
-[colors.bright]
-black = "0x444b6a" #444b6a
-blue = "0x7da6ff" #7da6ff
-cyan = "0x0db9d7" #0db9d7
-green = "0xb9f27c" #b9f27c
-magenta = "0xbb9af7" #bb9af7
-red = "0xff7a93" #ff7a93
-white = "0xacb0d0" #acb0d0
-yellow = "0xff9e64" #ff9e64
+[colors.primary]
+background = "0x1a1b26" #1a1b26
+foreground = "0xa9b1d6" #a9b1d6
 
 [colors.normal]
-black = "0x414868" #414868
+black = "0x7a828e" #7a828e
 blue = "0x7aa2f7" #7aa2f7
 cyan = "0x449dab" #449dab
 green = "0x9ece6a" #9ece6a
@@ -18,6 +12,13 @@ red = "0xf7768e" #f7768e
 white = "0x787c99" #787c99
 yellow = "0xe0af68" #e0af68
 
-[colors.primary]
-background = "0x1a1b26" #1a1b26
-foreground = "0xa9b1d6" #a9b1d6
+[colors.bright]
+black = "0x9ea7b3" #9ea7b3
+blue = "0x7da6ff" #7da6ff
+cyan = "0x0db9d7" #0db9d7
+green = "0xb9f27c" #b9f27c
+magenta = "0xbb9af7" #bb9af7
+red = "0xff7a93" #ff7a93
+white = "0xacb0d0" #acb0d0
+yellow = "0xff9e64" #ff9e64
+

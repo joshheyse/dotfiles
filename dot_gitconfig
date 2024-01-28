@@ -1,8 +1,8 @@
 # This is Git's per-user configuration file.
 [user]
-# Please adapt and uncomment the following lines:
   name = Josh Heyse
   email = josh@heyse.us
+  signingkey = 0x06B3614378AFA59E
 [pull]
   ff = only
 
@@ -10,3 +10,5 @@
   autoSetupRemote = true
 [init]
   defaultBranch = main
+[commit]
+  gpgsign = true

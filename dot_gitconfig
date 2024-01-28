@@ -1,12 +1,12 @@
 # This is Git's per-user configuration file.
 [user]
 # Please adapt and uncomment the following lines:
-name = Josh Heyse
-email = josh@heyse.us
+  name = Josh Heyse
+  email = josh@heyse.us
 [pull]
-	ff = only
+  ff = only
 
 [push]
   autoSetupRemote = true
 [init]
-	defaultBranch = main
+  defaultBranch = main

@@ -1,11 +1,23 @@
+local prefix = "<leader>n"
+local maps = { n = {} }
+local icon = vim.g.icons_enabled and "󰎚" or ""
+maps.n[prefix] = { desc = icon .. "Notes" }
+require("astronvim.utils").set_mappings(maps)
+
 return {
   "epwalsh/obsidian.nvim",
-  lazy = false,
+  lazy = true,
   -- the obsidian vault in this default config  ~/obsidian-vault
   -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand':
   -- event = { "bufreadpre " .. vim.fn.expand "~" .. "/my-vault/**.md" },
-  event = { "BufReadPre  */.notes/*.md" },
+  event = { "BufReadPre " .. vim.fn.expand "~" .. "/.notes/*.md" },
+  cmd = { "ObsidianOpen", "ObsidianNew", "ObsidianQuickSwitch", "ObsidianFollowLink", "ObsidianBacklinks", "ObsidianTags", "ObsidianToday", "ObsidianYesterday", "ObsidianTomorrow", "ObsidianTemplate", "ObsidianSearch", "ObsidianLink", "ObsidianLinkNew", "ObsidianWorkspace", "ObsidianPasteImg", "ObsidianRename" },
   keys = {
+    { prefix .. "n", "<cmd>ObsidianNew<cr>", desc = "New Note (Obsidian)" },
+    { prefix .. "h", "<cmd>ObsidianYesterday<cr>", desc = "Yesterday (Obsidian)" },
+    { prefix .. "j", "<cmd>ObsidianToday<cr>", desc = "Today (Obsidian)" },
+    { prefix .. "l", "<cmd>ObsidianTomorrow<cr>", desc = "Tomorrow (Obsidian)" },
+    { prefix .. "o", "<cmd>ObsidianQuickSwitch<cr>", desc = "QuickSwitch (Obsidian)" },
     {
       "gf",
       function()
@@ -17,7 +29,7 @@ return {
       end,
       noremap = false,
       expr = true,
-    },
+   }
   },
   dependencies = {
     "nvim-lua/plenary.nvim",
@@ -64,3 +76,6 @@ return {
     follow_url_func = vim.ui.open or require("astronvim.utils").system_open,
   },
 }
+
+--[[
+]]

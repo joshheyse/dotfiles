@@ -55,11 +55,8 @@ if [[ "$TERM_PROGRAM" == "vscode" ]]; then
   export TERM='alacritty'
 fi
 
-export NVM_DIR
-NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-if [ -s "$NVM_DIR/nvm.sh" ]; then
-  \. "$NVM_DIR/nvm.sh" # This loads nvm
-fi
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 
 export path=("$HOME/.local/bin" $path)
 export path=("$HOME/.cargo/bin" $path)
@@ -143,7 +140,6 @@ zinit blockf atpull'zinit creinstall -q .' for zsh-users/zsh-completions
 
 zinit wait'1' lucid light-mode for lukechilds/zsh-better-npm-completion
 zinit wait'1' atclone'./zplug.zsh' lucid for g-plane/zsh-yarn-autocompletions
-zinit wait'1' lucid light-mode for jscutlery/nx-completion
 
 if [ ! -x "$(command -v dircolors)" ]; then
   alias dircolors=gdircolors
@@ -205,12 +201,6 @@ forgit_ignore=forgig
 # ctrl-d to drop stash with gss
 export FORGIT_STASH_FZF_OPTS='--bind="ctrl-d:reload(git stash drop $(cut -d: -f1 <<<{}) 1>/dev/null && git stash list)"'
 
-
-zinit wait'1' lucid for \
-  MichaelAquilina/zsh-you-should-use \
-  OMZP::dircycle
-
-
 # disable sort when completing `git checkout`
 zstyle ':completion:*:git-checkout:*' sort false
 # set descriptions format to enable group support
@@ -229,7 +219,6 @@ zinit wait'1' lucid atclone'source fzf-tab.zsh && build-fzf-tab-module' \
 
 zinit ice depth=1
 zinit light jeffreytse/zsh-vi-mode
-
 zinit light zsh-users/zsh-autosuggestions
 zinit light zdharma-continuum/fast-syntax-highlighting
 
@@ -245,7 +234,8 @@ function weechat() {
 
 export EDITOR=vim
 
+export KEYID=0x06B3614378AFA59E
 export GPG_TTY="$(tty)"
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 gpgconf --launch gpg-agent
-export KEYID=0x06B3614378AFA59E
+gpg-connect-agent updatestartuptty /bye

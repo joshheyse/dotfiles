@@ -237,7 +237,6 @@ export EDITOR=vim
 export KEYID=0x06B3614378AFA59E
 gpgconf --create-socketdir
 if [[ -z "${SSH_TTY}" ]]; then
-  echo "Host"
   export GPG_TTY="$(tty)"
   export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
   gpgconf --launch gpg-agent > /dev/null 2>&1 

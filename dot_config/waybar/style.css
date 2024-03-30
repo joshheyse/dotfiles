@@ -21,9 +21,9 @@
 }
 
 #waybar {
-	font-family: 'MesloLGS Nerd Font';
-	font-size: 1.2em;
-	font-weight: 400;
+  font-family: "MesloLGS Nerd Font";
+  font-size: 1.2em;
+  font-weight: 400;
   color: @base04;
   background: @base01;
 }
@@ -36,9 +36,6 @@
   margin: 4px 0;
   padding: 0 4px;
   color: @base05;
-}
-
-#workspaces button.visible {
 }
 
 #workspaces button.active {
@@ -65,12 +62,27 @@
   border-left: none;
 }
 
-#mode, #battery, #cpu, #memory, #network, #pulseaudio, #idle_inhibitor, #backlight, #custom-storage, #custom-updates, #custom-weather, #custom-mail, #clock, #temperature, #language{
+#mode,
+#battery,
+#cpu,
+#memory,
+#network,
+#pulseaudio,
+#idle_inhibitor,
+#backlight,
+#clock,
+#custom-spotify,
+#temperature {
   margin: 4px 2px;
   padding: 0 6px;
   background-color: @base02;
   border-radius: 4px;
   min-width: 20px;
+}
+
+#network,
+#battery {
+  padding: 0 18px 0 6px;
 }
 
 #pulseaudio.muted {
@@ -101,11 +113,4 @@
   font-size: 0.9em;
   font-weight: 500;
   letter-spacing: -1px;
-}
-
-.custom-spotify {
-  padding: 0 10px;
-  margin: 4px 4px 4px 4px;
-  border-radius: 4px;
-  background-color: @base02;
 }

@@ -8,25 +8,25 @@
     "modules-left": ["hyprland/workspaces", "idle_inhibitor", "backlight", "network", "pulseaudio", "custom/spotify", "custom/updates"],
     "modules-center": ["hyprland/window"],
     "modules-right": ["cpu", "memory", "temperature", "battery", "tray", "clock"],
-         "hyprland/workspaces": {
-         "disable-scroll": true,
-         "on-click": "activate",
-         // "all-outputs": false,
-         // "format": "{name}: {icon}",
-         "format": "{name}",
-         "on-scroll-up": "hyprctl dispatch workspace m-1 > /dev/null",
-         "on-scroll-down": "hyprctl dispatch workspace m+1 > /dev/null",
-         "format-icons": {
-             "1": "",
-             "2": "",
-             "3": "",
-             "4": "",
-             "5": "",
-             "urgent": "",
-             "focused": "",
-             "default": ""
-         }
-     },
+        "hyprland/workspaces": {
+        "disable-scroll": true,
+        "on-click": "activate",
+        // "all-outputs": false,
+        // "format": "{name}: {icon}",
+        "format": "{name}",
+        "on-scroll-up": "hyprctl dispatch workspace m-1 > /dev/null",
+        "on-scroll-down": "hyprctl dispatch workspace m+1 > /dev/null",
+        "format-icons": {
+            "1": "",
+            "2": "",
+            "3": "",
+            "4": "",
+            "5": "",
+            "urgent": "",
+            "focused": "",
+            "default": ""
+        }
+    },
     "keyboard-state": {
         "numlock": false,
         "capslock": false,
@@ -53,32 +53,6 @@
         "format-icons": ["", ""],
         "tooltip": true,
         "tooltip-format": "{app}: {title}"
-    },
-    "mpd": {
-        "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ {volume}% ",
-        "format-disconnected": "Disconnected ",
-        "format-stopped": "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ",
-        "unknown-tag": "N/A",
-        "interval": 2,
-        "consume-icons": {
-            "on": " "
-        },
-        "random-icons": {
-            "off": "<span color=\"#f53c3c\"></span> ",
-            "on": " "
-        },
-        "repeat-icons": {
-            "on": " "
-        },
-        "single-icons": {
-            "on": "1 "
-        },
-        "state-icons": {
-            "paused": "",
-            "playing": ""
-        },
-        "tooltip-format": "MPD (connected)",
-        "tooltip-format-disconnected": "MPD (disconnected)"
     },
     "idle_inhibitor": {
         "format": "{icon}",
@@ -109,7 +83,7 @@
         "critical-threshold": 80,
         // "format-critical": "{temperatureC}°C {icon}",
         "format": "{temperatureC}°C {icon}",
-        "format-icons": ["", "", ""]
+        "format-icons": ["", "", ""]
     },
     "backlight": {
         // "device": "acpi_video1",
@@ -123,7 +97,7 @@
             "critical": 15
         },
         "format": "{capacity}% {icon}",
-        "format-charging": "{capacity}% ",
+        "format-charging": "{capacity}% ",
         "format-plugged": "{capacity}% ",
         "format-alt": "{time} {icon}",
         // "format-good": "", // An empty format will hide the module

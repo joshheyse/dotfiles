@@ -24,7 +24,3 @@ alias ec='chezmoi edit --apply'
 
 alias cdp='cd $(npm prefix)'
 alias cdg='cd $(git rev-parse --show-toplevel)'
-
-alias pip='pip3'
-alias python='python3'
-

@@ -8,7 +8,6 @@ return {
         "gopls",
         "html",
         "marksman",
-        "neocmake",
         "jsonls",
         "pyright",
         "lua_ls",

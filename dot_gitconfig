@@ -1,8 +1,7 @@
 # This is Git's per-user configuration file.
 [user]
   name = Josh Heyse
-  email = josh@heyse.us
-  signingkey = 0x06B3614378AFA59E
+  email = josh.heyse@chicagotrading.com
 [pull]
   ff = only
 
@@ -10,5 +9,11 @@
   autoSetupRemote = true
 [init]
   defaultBranch = main
-; [commit]
-;   gpgsign = true
+
+[core]
+  excludesfile = "$HOME/.gitignore"
+
+[includeIf "gitdir:$HOME/.local/share/chezmoi/"]
+  path = "$HOME/.local/share/chezmoi/.gitconfig"
+
+

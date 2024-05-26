@@ -1,4 +1,0 @@
-return {
-  "clangd"
-  -- "rust-analyzer"
-}

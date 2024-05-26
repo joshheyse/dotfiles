@@ -1,6 +1,6 @@
 local prefix = "<leader>a"
 local maps = { n = {} }
-maps.n[prefix] = { desc = "󰎚 AI" }
+maps.n[prefix] = { desc = "󰧑 AI " }
 require("astrocore").set_mappings(maps)
 
 return {

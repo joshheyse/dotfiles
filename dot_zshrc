@@ -160,7 +160,6 @@ if [ ! -x "$(command -v dircolors)" ]; then
   alias dircolors=gdircolors
 fi
 
-export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=black'
 
 # add LOTS of file type colors
 # zinit wait'1' atclone"dircolors -b LS_COLORS > clrs.zsh" \
@@ -234,6 +233,8 @@ zinit wait'1' lucid atclone'source fzf-tab.zsh && build-fzf-tab-module' \
 
 zinit ice depth=1
 zinit light jeffreytse/zsh-vi-mode
+
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=244'
 zinit light zsh-users/zsh-autosuggestions
 zinit light zdharma-continuum/fast-syntax-highlighting
 

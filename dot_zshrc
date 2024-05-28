@@ -267,3 +267,5 @@ fi
 export TMUXIFIER_LAYOUT_PATH="$HOME/.config/tmux-layouts"
 export QSYS_ROOTDIR="$HOME/intelFPGA_lite/23.1std/quartus/sopc_builder/bin"
 
+alias docker='podman'
+export KIND_EXPERIMENTAL_PROVIDER=podman

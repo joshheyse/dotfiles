@@ -13,7 +13,7 @@
 [core]
   excludesfile = "$HOME/.gitignore"
 
-[includeIf "gitdir:$HOME/.local/share/chezmoi/"]
-  path = "$HOME/.local/share/chezmoi/.gitconfig"
+[includeIf "gitdir:~/.local/share/chezmoi/"]
+  path = "~/.local/share/chezmoi/.gitconfig"
 
 

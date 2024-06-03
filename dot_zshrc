@@ -44,8 +44,6 @@ if type brew &>/dev/null; then
 
 fi
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
 __conda_prefix="$HOME/.conda"
 __conda_setup="$("$__conda_prefix/bin/conda" 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
@@ -58,7 +56,6 @@ else
     fi
 fi
 unset __conda_setup
-# <<< conda initialize <<<
 
 LOCAL_TERM_INFOS="$HOME/.local/share/terminfo"
 if [ -d $LOCAL_TERM_INFOS ]; then
@@ -160,7 +157,6 @@ if [ ! -x "$(command -v dircolors)" ]; then
   alias dircolors=gdircolors
 fi
 
-export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=black'
 
 # add LOTS of file type colors
 # zinit wait'1' atclone"dircolors -b LS_COLORS > clrs.zsh" \
@@ -232,12 +228,21 @@ zstyle ':fzf-tab:*' switch-group ',' '.'
 zinit wait'1' lucid atclone'source fzf-tab.zsh && build-fzf-tab-module' \
   atpull'%atclone' for Aloxaf/fzf-tab
 
+
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=244'
+
 zinit ice depth=1
 zinit light jeffreytse/zsh-vi-mode
 zinit light zsh-users/zsh-autosuggestions
 zinit light zdharma-continuum/fast-syntax-highlighting
 
-eval "$(starship init zsh)"
+if [ -x "$(command -v gh)" ]; then
+  eval "$(gh copilot alias -- zsh)"
+fi
+
+if [ -x "$(command -v starship)" ]; then
+  eval "$(starship init zsh)"
+fi
 
 if [[ -f "$HOME/.aliases" ]]; then
   source "$HOME/.aliases"

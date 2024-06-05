@@ -18,7 +18,7 @@
   excludesFile = ~/.gitignore
 
 [includeIf "gitdir:{{- .chezmoi.workingTree }}"]
-  path = {{ .chezmoi.workingTree }}
+  path = {{ .chezmoi.workingTree -}}/.gitconfig
 
 {{ else }}
 [user]

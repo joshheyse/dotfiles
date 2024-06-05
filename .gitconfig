@@ -1,4 +1,3 @@
-# This is Git's per-user configuration file.
 [user]
   name = Josh Heyse
   email = josh@heyse.us
@@ -10,5 +9,3 @@
   autoSetupRemote = true
 [init]
   defaultBranch = main
-; [commit]
-;   gpgsign = true

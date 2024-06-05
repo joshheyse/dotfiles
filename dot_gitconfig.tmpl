@@ -11,7 +11,7 @@
 [init]
   defaultBranch = main
 
-{{ if eq .chezmoi.username "heysej" }}
+{{ if (or (eq .chezmoi.username "heysej") (eq .chezmoi.username "josh.heyse")) }}
 [user]
   email = josh.heyse@chicagotrading.com
 

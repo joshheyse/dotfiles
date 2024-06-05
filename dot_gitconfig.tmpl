@@ -1,14 +1,28 @@
 # This is Git's per-user configuration file.
 [user]
   name = Josh Heyse
-  email = josh@heyse.us
-  signingkey = 0x06B3614378AFA59E
+
 [pull]
   ff = only
 
 [push]
   autoSetupRemote = true
+
 [init]
   defaultBranch = main
-; [commit]
-;   gpgsign = true
+
+{{ if eq .chezmoi.username "heysej" }}
+[user]
+  email = josh.heyse@chicagotrading.com
+
+[core]
+  excludesFile = ~/.gitignore
+{{ else }}
+[user]
+  email = josh@heyse.us
+  signingkey = 0x06B3614378AFA59E
+
+[commit]
+  gpgsign = true
+{{ end }}
+

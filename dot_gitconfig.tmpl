@@ -19,7 +19,7 @@
   excludesFile = ~/.gitignore
 
 [includeIf "gitdir:{{- .chezmoi.workingTree }}"]
-  path = {{- .chezmoi.workingTree }}
+  path = {{ .chezmoi.workingTree }}
 
 {{ else }}
 [user]

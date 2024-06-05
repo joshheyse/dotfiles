@@ -11,6 +11,7 @@
   defaultBranch = main
 
 {{ if (or (eq .chezmoi.username "heysej") (eq .chezmoi.username "josh.heyse")) }}
+
 [user]
   email = josh.heyse@chicagotrading.com
 
@@ -21,11 +22,13 @@
   path = {{ .chezmoi.workingTree -}}/.gitconfig
 
 {{ else }}
+
 [user]
   email = josh@heyse.us
   signingkey = 0x06B3614378AFA59E
 
 [commit]
   gpgsign = true
+
 {{ end }}
 

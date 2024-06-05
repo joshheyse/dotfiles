@@ -17,6 +17,10 @@
 
 [core]
   excludesFile = ~/.gitignore
+
+[includeIf "gitdir:{{- .chezmoi.workingTree }}"]
+  path = {{- .chezmoi.workingTree }}
+
 {{ else }}
 [user]
   email = josh@heyse.us

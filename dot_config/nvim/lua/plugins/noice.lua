@@ -37,9 +37,19 @@ return {
     end,
   },
   {
+    "rcarriga/nvim-notify",
+    opts = {
+      top_down = false,
+    },
+    setup = function(_, opts) require("notify").setup(opts) end,
+  },
+  {
     "folke/noice.nvim",
     event = "VeryLazy",
-    dependencies = { "MunifTanjim/nui.nvim" },
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "rcarriga/nvim-notify",
+    },
     opts = function(_, opts)
       local utils = require "astrocore"
       return utils.extend_tbl(opts, {
@@ -50,6 +60,9 @@ return {
             ["vim.lsp.util.stylize_markdown"] = true,
             ["cmp.entry.get_documentation"] = true,
           },
+        },
+        notify = {
+          top_down = false,
         },
         presets = {
           bottom_search = true, -- use a classic bottom cmdline for search

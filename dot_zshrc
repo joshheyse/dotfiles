@@ -68,7 +68,7 @@ if [[ "$TERM_PROGRAM" == "vscode" ]]; then
 fi
 
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
 
 export path=("$HOME/.local/bin" $path)
 export path=("$HOME/.cargo/bin" $path)
@@ -260,15 +260,17 @@ eval "$(tmuxifier init -)"
 export KEYID=0x06B3614378AFA59E
 
 if [[ -d /run/user ]]; then
-  gpgconf --create-socketdir
+  gpgconf --create-socketdir > /dev/null 2>&1
 fi
+
 if [[ -z "${SSH_TTY}" ]]; then
   export GPG_TTY="$(tty)"
   export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
-  gpgconf --launch gpg-agent > /dev/null 2>&1 
+  gpgconf --launch gpg-agent > /dev/null 2>&1
   gpg-connect-agent updatestartuptty /bye > /dev/null 2>&1
 fi
 
 export TMUXIFIER_LAYOUT_PATH="$HOME/.config/tmux-layouts"
 export QSYS_ROOTDIR="$HOME/intelFPGA_lite/23.1std/quartus/sopc_builder/bin"
 
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

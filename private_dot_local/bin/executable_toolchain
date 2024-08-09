@@ -1,0 +1,34 @@
+#! /usr/bin/env  bash
+
+toolchain="$1"
+toolchains="$HOME/.toolchains"
+
+if [[ "$toolchain" == "system" ]]; then
+  PATH="$(echo "$PATH" | tr ':' '\n' | grep -v ".toolchains" | grep '.' | tr '\n' ':')"
+  LD_LIBRARY_PATH="$(echo "$LD_LIBRARY_PATH" | tr ':' '\n' | grep -v ".toolchains" | grep '.' | tr '\n' ':')"
+  unset CC
+  unset CXX
+else
+  toolchain_path="$toolchains/$toolchain"
+  echo "toolchain $toolchain path: $toolchain_path"
+
+  if [[ ! -d "$toolchain_path" ]]; then
+    echo "Toolchain $toolchain not found"
+  else
+    PATH="$toolchain_path/bin:$(echo "$PATH" | tr ':' '\n' | grep -v ".toolchains" | grep '.' | tr '\n' ':')"
+    LD_LIBRARY_PATH="$toolchain_path/lib64:$toolchain_path/lib:$(echo "$LD_LIBRARY_PATH" | tr ':' '\n' | grep -v ".toolchains" | grep '.' | tr '\n' ':')"
+    export PATH
+    export LD_LIBRARY_PATH
+    if [[ "${toolchain_path}" == *gcc* ]]; then
+      export CC=$toolchain_path/bin/gcc
+      export CXX=$toolchain_path/bin/g++
+    elif [[ "${toolchain_path}" == *llvm* ]]; then
+      export CC=$toolchain_path/bin/clang
+      export CXX=$toolchain_path/bin/clang++
+    fi
+    echo "PATH: $PATH"
+    echo "LD_LIBRARY_PATH: $LD_LIBRARY_PATH"
+    echo "CC: $CC"
+    echo "CXX: $CXX"
+  fi
+fi

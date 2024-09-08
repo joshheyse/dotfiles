@@ -1,6 +1,10 @@
 #! /usr/bin/env zsh
 
+# zmodload zsh/zprof
+
 typeset -U PATH path
+
+autoload -U add-zsh-hook
 
 if [ "$(uname -o)" = "Darwin" ]; then
   export IS_MACOS=true
@@ -44,19 +48,6 @@ if type brew &>/dev/null; then
 
 fi
 
-__conda_prefix="$HOME/.conda"
-__conda_setup="$("$__conda_prefix/bin/conda" 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "$__conda_prefix/etc/profile.d/conda.sh" ]; then
-        . "$__conda_prefix/etc/profile.d/conda.sh"
-    else
-        export PATH="$__conda_prefix/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-
 LOCAL_TERM_INFOS="$HOME/.local/share/terminfo"
 if [ -d $LOCAL_TERM_INFOS ]; then
   export TERMINFO_DIRS="$TERMINFO_DIRS:$LOCAL_TERM_INFOS"
@@ -67,8 +58,86 @@ if [[ "$TERM_PROGRAM" == "vscode" ]]; then
   source "$(code --locate-shell-integration-path zsh)"
 fi
 
+# __conda_prefix="$HOME/.conda"
+# __conda_setup="$("$__conda_prefix/bin/conda" 'shell.zsh' 'hook' 2> /dev/null)"
+# if [ $? -eq 0 ]; then
+#     eval "$__conda_setup"
+# else
+#     if [ -f "$__conda_prefix/etc/profile.d/conda.sh" ]; then
+#         . "$__conda_prefix/etc/profile.d/conda.sh"
+#     else
+#         export PATH="$__conda_prefix/bin:$PATH"
+#     fi
+# fi
+# unset __conda_setup
+
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
+if [[ -d $NVM_DIR ]]; then
+
+  unset_nvm_lazy_path() {
+    export PATH=$(echo $PATH | sed "s|${NVM_LAZY_PATH}:||" )
+    unset NVM_LAZY_PATH
+  }
+
+  set_nvm_lazy_path() {
+    unset_nvm_lazy_path
+    export NVM_LAZY_PATH="$1"
+    export path=($NVM_LAZY_PATH $path)
+  }
+
+  nvm_lazy_load() {
+    unset -f nvm
+    echo "Loading NVM"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+   
+    unset_nvm_lazy_path
+    add-zsh-hook -d chpwd check_for_nvmrc
+    unset check_for_nvmrc
+  }
+
+  function get_node_dir() {
+    local target_ver=${1:-$(cat "$NVM_DIR/alias/default")}
+    target_ver=$(echo $target_ver | sed s/v//)
+    local version="$(find $NVM_DIR/versions/node -maxdepth 1 -exec basename {} \; \
+                          | sed s/v// \
+                          | grep $target_ver \
+                          | sort --version-sort --reverse)"
+    [[ -n $version ]] && echo "$NVM_DIR/versions/node/v$version/bin"
+  }
+
+  function nvm() {
+    nvm_lazy_load
+    nvm $@
+  }
+
+  function check_for_nvmrc() {
+    local dir="$PWD"
+
+    # Look for .nvmrc file in current directory and parent directories
+    while [[ -n "$dir" && ! -f "$dir/.nvmrc" ]]; do
+      dir="${dir%/*}"
+    done
+
+    if [[ -z "$dir" ]]; then
+      return
+    fi
+
+    local target_ver="$(get_node_dir $(cat "$dir/.nvmrc"))"
+    if [[ -n $target_ver ]]; then
+      set_nvm_lazy_path $target_ver
+    else
+      nvm_lazy_load
+      nvm use
+    fi
+     
+  }
+
+  set_nvm_lazy_path "$(get_node_dir)"
+  add-zsh-hook chpwd check_for_nvmrc
+
+fi
+
 
 export path=("$HOME/.local/bin" $path)
 export path=("$HOME/.cargo/bin" $path)
@@ -151,7 +220,6 @@ zstyle ':completion::complete:*' use-cache 1
 zinit blockf atpull'zinit creinstall -q .' for zsh-users/zsh-completions
 
 zinit wait'1' lucid light-mode for lukechilds/zsh-better-npm-completion
-zinit wait'1' atclone'./zplug.zsh' lucid for g-plane/zsh-yarn-autocompletions
 
 if [ ! -x "$(command -v dircolors)" ]; then
   alias dircolors=gdircolors
@@ -273,4 +341,5 @@ fi
 export TMUXIFIER_LAYOUT_PATH="$HOME/.config/tmux-layouts"
 export QSYS_ROOTDIR="$HOME/intelFPGA_lite/23.1std/quartus/sopc_builder/bin"
 
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# zprof

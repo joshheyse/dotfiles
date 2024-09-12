@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+ignore_branches="master|main|dev"
+
+if [[ "$1" == "confirm" ]]; then
+  echo 'Local'
+  git branch --merged | grep -Ev "(^\*|$ignore_branches)" | xargs git branch -d
+  printf '\nRemote\n'
+  git branch -r --merged | grep -Ev "(^\*|$ignore_branches)" | sed 's/origin\//:/' | xargs -n 1 git push origin
+else
+  echo 'Local'
+  git branch --merged | grep -Ev "(^\*|$ignore_branches)"
+  printf '\nRemote\n'
+  git branch -r --merged | grep -Ev "(^\*|$ignore_branches)"
+fi

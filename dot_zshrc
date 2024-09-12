@@ -4,7 +4,6 @@
 
 typeset -U PATH path
 
-autoload -U add-zsh-hook
 
 if [ "$(uname -o)" = "Darwin" ]; then
   export IS_MACOS=true
@@ -133,6 +132,7 @@ if [[ -d $NVM_DIR ]]; then
      
   }
 
+  autoload add-zsh-hook
   set_nvm_lazy_path "$(get_node_dir)"
   add-zsh-hook chpwd check_for_nvmrc
 
@@ -244,9 +244,11 @@ if [ -x "$(command -v zoxide)" ]; then
   zinit wait'0' lucid as'null' atinit'unalias zi;eval "$(zoxide init zsh --hook prompt)" && alias c=__zoxide_zi zi=zinit' light-mode for zdharma-continuum/null
 fi
 
+
 zinit wait'1' lucid light-mode for zpm-zsh/ls
 zinit wait'1' lucid light-mode for zpm-zsh/autoenv
 zinit wait'1' lucid light-mode for zpm-zsh/ssh
+
 
 autoload compinit
 compinit
@@ -340,6 +342,6 @@ fi
 
 export TMUXIFIER_LAYOUT_PATH="$HOME/.config/tmux-layouts"
 export QSYS_ROOTDIR="$HOME/intelFPGA_lite/23.1std/quartus/sopc_builder/bin"
-
+#
 
 # zprof

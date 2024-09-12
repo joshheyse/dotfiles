@@ -29,6 +29,8 @@ $character"""
 
 add_newline = true
 
+command_timeout = 1000
+
 [line_break]
 disabled = false
 
@@ -53,7 +55,7 @@ format = '[[($all_status $ahead_behind )](fg:#769ff0 bg:#394260)]($style)'
 modified = '!${count}'
 renamed = '»${count}'
 staged = '+${count}'
-stashed = '$${count}'
+stashed = '\$${count}'
 style = "bg:#394260"
 untracked = '?${count}'
 

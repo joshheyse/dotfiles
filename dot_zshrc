@@ -53,35 +53,38 @@ if [ -d $LOCAL_TERM_INFOS ]; then
 fi
 unset LOCAL_TERM_INFOS
 
-if [[ "$TERM_PROGRAM" == "vscode" ]]; then
-  source "$(code --locate-shell-integration-path zsh)"
-fi
+CONDA_HOME="$HOME/.conda"
+if [[ -d $CONDA_HOME ]]; then
+  export path=("$CONDA_HOME/bin" $path)
 
-# __conda_prefix="$HOME/.conda"
-# __conda_setup="$("$__conda_prefix/bin/conda" 'shell.zsh' 'hook' 2> /dev/null)"
-# if [ $? -eq 0 ]; then
-#     eval "$__conda_setup"
-# else
-#     if [ -f "$__conda_prefix/etc/profile.d/conda.sh" ]; then
-#         . "$__conda_prefix/etc/profile.d/conda.sh"
-#     else
-#         export PATH="$__conda_prefix/bin:$PATH"
-#     fi
-# fi
-# unset __conda_setup
+  conda() {
+    unset -f conda
+    __conda_setup="$("$CONDA_HOME/bin/conda" 'shell.zsh' 'hook' 2> /dev/null)"
+    if [ $? -eq 0 ]; then
+        source eval "$__conda_setup"
+    else
+        if [ -f "$CONDA_HOME/etc/profile.d/conda.sh" ]; then
+            source "$CONDA_HOME/etc/profile.d/conda.sh"
+        else
+        fi
+    fi
+    unset __conda_setup
+  }
+
+fi
 
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 if [[ -d $NVM_DIR ]]; then
 
   unset_nvm_lazy_path() {
-    export PATH=$(echo $PATH | sed "s|${NVM_LAZY_PATH}:||" )
+    path=( "${path[@]/$NVM_LAZY_PATH}" )
     unset NVM_LAZY_PATH
   }
 
   set_nvm_lazy_path() {
     unset_nvm_lazy_path
     export NVM_LAZY_PATH="$1"
-    export path=($NVM_LAZY_PATH $path)
+    export path=("$NVM_LAZY_PATH" $path)
   }
 
   nvm_lazy_load() {
@@ -129,15 +132,13 @@ if [[ -d $NVM_DIR ]]; then
       nvm_lazy_load
       nvm use
     fi
-     
   }
 
-  autoload add-zsh-hook
   set_nvm_lazy_path "$(get_node_dir)"
+  autoload add-zsh-hook
   add-zsh-hook chpwd check_for_nvmrc
 
 fi
-
 
 export path=("$HOME/.local/bin" $path)
 export path=("$HOME/.cargo/bin" $path)
@@ -249,7 +250,6 @@ zinit wait'1' lucid light-mode for zpm-zsh/ls
 zinit wait'1' lucid light-mode for zpm-zsh/autoenv
 zinit wait'1' lucid light-mode for zpm-zsh/ssh
 
-
 autoload compinit
 compinit
 
@@ -343,5 +343,9 @@ fi
 export TMUXIFIER_LAYOUT_PATH="$HOME/.config/tmux-layouts"
 export QSYS_ROOTDIR="$HOME/intelFPGA_lite/23.1std/quartus/sopc_builder/bin"
 #
+
+if [[ "$TERM_PROGRAM" == "vscode" ]]; then
+  source "$(code --locate-shell-integration-path zsh)"
+fi
 
 # zprof

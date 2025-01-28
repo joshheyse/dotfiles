@@ -10,6 +10,17 @@
 [init]
   defaultBranch = main
 
+[alias]
+  staash = stash --all
+
+[rerere]
+  enabled = true
+
+[core]
+  excludesFile = ~/.gitignore
+  untrackedcache = true
+  fsmonitor = true
+
 {{ if (or (eq .chezmoi.username "heysej") (eq .chezmoi.username "josh.heyse")) }}
 
 [user]
@@ -21,6 +32,12 @@
 [includeIf "gitdir:{{- .chezmoi.workingTree -}}/"]
   path = {{ .chezmoi.workingTree -}}/.gitconfig
 
+[maintenance]
+  repo = /Users/josh.heyse/code/comet/deployments
+  repo = /Users/josh.heyse/code/comet/app
+  repo = /Users/josh.heyse/code/comet/cpp
+  repo = /Users/josh.heyse/code/comet/python
+
 {{ else }}
 
 [user]
@@ -31,4 +48,3 @@
   gpgsign = true
 
 {{ end }}
-

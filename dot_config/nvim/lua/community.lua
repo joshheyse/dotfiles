@@ -17,4 +17,5 @@ return {
   { import = "astrocommunity.pack.rust" },
   { import = "astrocommunity.pack.terraform" },
   { import = "astrocommunity.pack.typescript" },
+  { import = "astrocommunity.git.blame-nvim" },
 }
